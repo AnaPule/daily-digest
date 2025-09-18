@@ -1,8 +1,13 @@
+import os
+from dotenv import load_dotenv ## environment variables
+
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 
-url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+load_dotenv()  # This loads the variables from '.env'
+
+url = os.getenv('CRYPTO_CURRENCY_URL')
 parameters = {
   'start':'1',
   'limit':'5000',
@@ -10,7 +15,7 @@ parameters = {
 }
 headers = {
   'Accepts': 'application/json',
-  'X-CMC_PRO_API_KEY': '0ad53085-1cb2-4eb8-ad9e-3ffbd7e56509',
+  'X-CMC_PRO_API_KEY': os.getenv('CRYPTO_CURRENCY_API_KEY')
 }
 
 session = Session()
@@ -60,8 +65,8 @@ formatted_data = [fix_large_numbers(doc) for doc in cryptocurrency_data]
     ## install the library that allows that connection -> python3 -m pip install pymongo
 from pymongo import MongoClient
     ## create a mongodb instance to connect to your db
-client = MongoClient('mongodb://localhost:27017/?directConnection=true')
-db = client['daily-digest-db'] ##accessing the database from the backend
+client = MongoClient(os.getenv('DATABASE_URL'))
+db = client[os.getenv('DATABASE')] ##accessing the database from the backend
 ##db.create_collection('cryptocurrency') ##creating a collection from the backend
         ## note: to insert a single document into the collection -> db.cryptocurrency.insert_one(data)
 
