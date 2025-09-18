@@ -35,3 +35,5 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     # Run the application
     app.run(host='0.0.0.0', port=port, debug=True)
+
+""" cmd to run the backend: python3 -m backend.app"""
