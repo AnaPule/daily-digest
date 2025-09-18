@@ -17,7 +17,6 @@ if res.status_code == 200:
 else:
     print(f"Request failed with status code: {res.status_code}")
 """
-
 from pymongo import MongoClient
 from newsapi import NewsApiClient
 from datetime import date, timedelta
