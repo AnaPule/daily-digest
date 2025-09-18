@@ -67,7 +67,7 @@ from pymongo import MongoClient
     ## create a mongodb instance to connect to your db
 client = MongoClient(os.getenv('DATABASE_URL'))
 db = client[os.getenv('DATABASE')] ##accessing the database from the backend
-##db.create_collection('cryptocurrency') ##creating a collection from the backend
+#db.create_collection('cryptocurrency') ##creating a collection from the backend
         ## note: to insert a single document into the collection -> db.cryptocurrency.insert_one(data)
 
 batch_size = 100 ## inserts a hundred at a time -> prevents lagging or timeouts when inserting the data
