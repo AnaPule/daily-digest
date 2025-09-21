@@ -1,13 +1,34 @@
-from flask import Flask, jsonify
+"""implement socket method later..."""
 import os
+import atexit
+from flask import Flask, jsonify
 from dotenv import load_dotenv  ## environment variables
+from apscheduler.triggers.interval import IntervalTrigger
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask_cors import CORS  # For handling Cross-Origin Resource Sharing
-load_dotenv()
 
 ## routes
     ##from backend.routes.article import article_bp
     ##from backend.routes.crypto import crypto_bp
 from backend.routes import article_bp, crypto_bp
+
+## utils
+from backend.utils import fetch_crypto_data
+
+load_dotenv()
+
+# Initialize scheduler
+scheduler = BackgroundScheduler()
+scheduler.add_job(
+    func=fetch_crypto_data,
+    trigger=IntervalTrigger(minutes=5),
+    id='crypto_update',
+    name='Update crypto data every minute'
+)
+scheduler.start()
+
+## run the function to fetch the data immediatly
+fetch_crypto_data()
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -35,5 +56,9 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     # Run the application
     app.run(host='0.0.0.0', port=port, debug=True)
+    
+# Clean shutdown
+atexit.register(lambda: scheduler.shutdown())
 
 """ cmd to run the backend: python3 -m backend.app"""
+""" comd to install a new package: python3 -m pip install packageName"""

@@ -1,6 +1,7 @@
 
 //react
 import React, { useEffect, useState } from "react";
+import io from 'socket.io-client';
 
 //components
 import styles from './crypto.module.css';
@@ -15,24 +16,29 @@ const CryptoPage: React.FC = () => {
 
     const [cryptoData, setCryptoData] = useState<Crypto[]>([]);
     useEffect(() => {
-        fetch('http://localhost:5001/crypto')
-            .then(
-                res => {
-                    return res.json()
-                    //console.log('crypto response:',res.json())
-                })
-            .then(
-                (data) => {
-                    console.log('crypto response:', data.crypto)
-                    setCryptoData(data.crypto)
-                })
-            .catch(error => console.error('Error fetching data:', error));
+        const fetchData = async () => {
+            await fetch('http://localhost:5001/crypto')
+                .then(
+                    res => {
+                        return res.json()
+                        //console.log('crypto response:',res.json())
+                    })
+                .then(
+                    (data) => {
+                        console.log('crypto response:', data.crypto)
+                        setCryptoData(data.crypto)
+                    })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+        fetchData();
+        const interval = setInterval(fetchData, 300000); // Every 5 minutes
+        return () => clearInterval(interval);
     }, [])
 
-    const sortedData = cryptoData.sort((c: Crypto) => c.cmc_rank).slice(0,6)
+    const sortedData = cryptoData.sort((c: Crypto) => c.cmc_rank).slice(0, 6)
     // prices and changes in prices formated to suit their units (shorter formation)
     const formatNumber = (num: number, decimals: number = 2) => {
-        if (num >= 1e12) return`R {(num / 1e12).toFixed(1)} T`;
+        if (num >= 1e12) return `R {(num / 1e12).toFixed(1)} T`;
         if (num >= 1e9) return `R {(num / 1e9).toFixed(2)} B`;
         if (num >= 1e6) return `R {(num / 1e6).toFixed(2)} M`;
         if (num >= 1e3) return `R {(num / 1e3).toFixed(2)} K`;
@@ -50,7 +56,7 @@ const CryptoPage: React.FC = () => {
                     sortedData.map((c: Crypto) => (
                         <PageWidget
                             Heading={c.name}
-                            Content= {c.quote.ZAR.price}
+                            Content={c.quote.ZAR.price}
                             Subcontent={c.quote.ZAR.percent_change_1h}
                         />
                     ))
