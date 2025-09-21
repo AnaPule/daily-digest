@@ -11,7 +11,7 @@ def get_crypto():
             db.cryptocurrency
             .find({}, {'_id': 0})
             .sort('timestamp', -1)
-            .limit(10))
+            .limit(100))
 
         return jsonify({
             'status': '200',

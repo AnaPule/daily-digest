@@ -1,13 +1,15 @@
 
 import './App.css'
 
-import DailyDigest from './pages/daily-digest'
+import CryptoPage from './pages/crypto/crypto';
+import DailyDigest from './pages/general news/daily-digest';
 
 function App() {
 
   return (
     <>
-    <DailyDigest />
+    <CryptoPage />
+    {/* <DailyDigest /> */}
     </>
   )
 }

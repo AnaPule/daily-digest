@@ -1,5 +1,6 @@
 export default interface Crypto {
-    id: number;
+    id: string;
+    max_supply: number;
     circulating_supply: number;
     cmc_rank: number;
     date_added: Date;
@@ -14,15 +15,21 @@ export default interface Crypto {
     total_supply: number;
     tags: string[];
     quote: {
-        USD: {
+        ZAR: {
             fully_diluted_market_cap: number;
             last_updated: Date;
             market_cap: number;
+
             market_cap_dominance: number;
+
+            percent_change_24h: number;
             percent_change_1h: number;
+            percent_change_7d: number;
+
             price: number;
-            volume_24h: number;
+
             volume_change_24h: number;
+            volume_24h: number;
         }
     };
 }

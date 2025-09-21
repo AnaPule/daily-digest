@@ -7,11 +7,12 @@ import json
 
 load_dotenv()  # This loads the variables from '.env'
 
-url = os.getenv('CRYPTO_CURRENCY_URL')
+latest_url = os.getenv('CRYPTO_CURRENCY_LATEST_URL')
+history_url = os.getenv('CRYPTO_CURRENCY_HISTORY_URL')
 parameters = {
   'start':'1',
   'limit':'5000',
-  'convert':'USD'
+  'convert':'ZAR'
 }
 headers = {
   'Accepts': 'application/json',
@@ -22,9 +23,13 @@ session = Session()
 session.headers.update(headers)
 
 try:
-  response = session.get(url, params=parameters)
+  response = session.get(latest_url, params=parameters)
+  history_res = session.get(history_url, params=parameters)
+
   data = json.loads(response.text)## retrieves data in json format
-  print('data retrieved successfully')
+  #history_data = json.loads(history_res.text) #3retrieves data in json format
+
+  print('latest data retrieved successfully')
 except (ConnectionError, Timeout, TooManyRedirects) as e:
   print(e)
 
@@ -32,12 +37,15 @@ except (ConnectionError, Timeout, TooManyRedirects) as e:
 import pandas as pd
 #pd.set_potion('display.max_columns', None)
 pd.json_normalize(data['data'])
-
+#print(f"{history_data}")
+#pd.json_normalize(history_data['data'])
 
 # Your code to fetch data here...
 
 #print(f"Data type: {type(data)}") #reports data is a dictionary, not a list
 cryptocurrency_data = data['data']
+history = data['data']
+##print(f"History of listings: {history}")
 #print (f"formatted: {cryptocurrency_data[:1]}")
 #print(f"Data length: {len(cryptocurrency_data) if isinstance(cryptocurrency_data, list) else 'Not a list'}")
 
@@ -76,5 +84,5 @@ for i in range(0, len(formatted_data), batch_size):
     db.cryptocurrency.insert_many(batch) ## inserts many documents into the collection
     # print (f"inserted batch {i//batch_size + 1}")
 
-print ("All data inserted successfully")
+print ("All data listings inserted successfully")
 #db.cryptocurrency.insert_many(cryptocurrency_data) ##inserts many documents into the collection
