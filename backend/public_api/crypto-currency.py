@@ -33,10 +33,10 @@ try:
 except (ConnectionError, Timeout, TooManyRedirects) as e:
   print(e)
 
-## displaying data in a more normalised format
-import pandas as pd
+## displaying data in a more normalised format - for testing using jupyter
+#import pandas as pd
 #pd.set_potion('display.max_columns', None)
-pd.json_normalize(data['data'])
+#pd.json_normalize(data['data'])
 #print(f"{history_data}")
 #pd.json_normalize(history_data['data'])
 
@@ -78,6 +78,11 @@ db = client[os.getenv('DATABASE')] ##accessing the database from the backend
 #db.create_collection('cryptocurrency') ##creating a collection from the backend
         ## note: to insert a single document into the collection -> db.cryptocurrency.insert_one(data)
 
+##empty the collection so that the new data has space
+db.cryptocurrency.delete_many({}) # This deletes ALL documents in the collection
+print("Cleared existing data")
+
+#3make inserts of new data
 batch_size = 100 ## inserts a hundred at a time -> prevents lagging or timeouts when inserting the data
 for i in range(0, len(formatted_data), batch_size):
     batch = formatted_data[i:i + batch_size]

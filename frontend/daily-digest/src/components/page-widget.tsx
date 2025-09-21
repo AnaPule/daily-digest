@@ -1,16 +1,15 @@
 
-import logo from '../assets/react.svg';
+import styles from './widget.module.css';
 
 interface WidgetProps {
     //compulsory
     Heading: string;
-    Content: string;
-    Subcontent: string;
+    Content: number;
+    Subcontent: number;
     //optional
     Logo?: string;
     Subheading?: string;
     datapoints?: number[];
-    isPositive?: boolean;
 }
 
 const PageWidget: React.FC<WidgetProps> = ({
@@ -19,40 +18,18 @@ const PageWidget: React.FC<WidgetProps> = ({
     Content,
     Subcontent,
     datapoints = [],
-    isPositive = false
 }: WidgetProps) => {
 
-    // Simple SVG line chart generator
-    const generateLineChart = (data: number[]) => {
-        if (data.length < 2) return null;
-
-        const width = 80;
-        const height = 30;
-        const padding = 2;
-
-        const min = Math.min(...data);
-        const max = Math.max(...data);
-        const range = max - min || 1;
-
-        const points = data.map((value, index) => {
-            const x = padding + (index / (data.length - 1)) * (width - 2 * padding);
-            const y = height - padding - ((value - min) / range) * (height - 2 * padding);
-            return `${x},${y}`;
-        }).join(' ');
-
+    // percentage change formatting
+    const formatPercentage = (percent: number) => {
+        const isPositive = (percent >= 0);
+        const symbol = isPositive ? '▲' : '▼';
         return (
-            <svg width={width} height={height} className="line-chart">
-                <polyline
-                    points={points}
-                    fill="none"
-                    stroke={isPositive ? "#22c55e" : "#ef4444"}
-                    strokeWidth="1.5"
-                    strokeLinejoin="round"
-                />
-            </svg>
+            <span className={`styles.percentage ${isPositive ? styles.positive : styles.negative}`}>
+                {symbol} {Math.abs(percent).toFixed(2)}%
+            </span>
         );
     };
-
     return (
         <>
             <div className="page-widget">
@@ -70,20 +47,17 @@ const PageWidget: React.FC<WidgetProps> = ({
                 <div className="widget-content">
                     {/* prices */}
                     <div className="price-section">
-                        <div className="main-price">{Content}</div>
+                        <div className="main-price">R {Content.toFixed(2)}</div>
 
-                        {/* line chart */}
+                        {/* line chart 
                         <div className="chart-container">
                             {datapoints.length > 0 && generateLineChart(datapoints)}
-                        </div>
+                        </div>*/}
                     </div>
 
                     {/* sub content */}
-                    <div className={`price-change ${isPositive ? 'positive' : 'negative'}`}>
-                        <span className="change-indicator">
-                            {isPositive ? '▲' : '▼'}
-                        </span>
-                        {Subcontent}
+                    <div className={`price-change`}>
+                        {formatPercentage(Subcontent)}
                     </div>
 
                 </div> {/* end of content */}
