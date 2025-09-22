@@ -80,8 +80,8 @@ def fetch_crypto_data():
     #db.create_collection('cryptocurrency') ##creating a collection from the backend
             ## note: to insert a single document into the collection -> db.cryptocurrency.insert_one(data)
     ##empty the collection so that the new data has space
-    db.cryptocurrency.delete_many({}) # This deletes ALL documents in the collection
-    print("Cleared old crypto currency data")
+        ## db.cryptocurrency.delete_many({}) # This deletes ALL documents in the collection
+        ## print("Cleared old crypto currency data")
 
     #3make inserts of new data
     batch_size = 100 ## inserts a hundred at a time -> prevents lagging or timeouts when inserting the data

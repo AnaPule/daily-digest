@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import styles from './crypto.module.css'
 import type Crypto from '../../models/crypto';
-import { Info, Star, ChevronLeft, ChevronRight, ChevronLast, ChevronFirst, ChevronDown } from 'lucide-react';
+import { Info, Star, ChevronLeft, ChevronRight, ChevronLast, ChevronFirst, ChevronDown, Funnel, ArrowDownNarrowWide } from 'lucide-react';
 
 interface CryptoTableProps {
     data: Crypto[];
@@ -90,7 +90,19 @@ const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
     };
 
     return (
-        <>
+        <div className="crypto-table-container">
+            <div className="table-header">
+                <div className="table-controls">
+                    <div>
+                        <span className="control-item"> <ArrowDownNarrowWide size={20} /></span>
+                    </div>
+                    <div>
+                        <span className="control-item"> <Funnel size={15} /> Price </span>
+                        <span className="control-item"> <Funnel size={15} /> Market Cap</span>
+                        <span className="control-item"> <Funnel size={15} /> Volume(24h)</span>
+                    </div>
+                </div>
+            </div>
             <div className="table-wrapper">
                 <table className="crypto-table">
                     <thead>
@@ -250,7 +262,7 @@ const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
                     Showing {startIndex + 1}-{Math.min(endIndex, data.length)} of {data.length}
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 export default CryptoTable;

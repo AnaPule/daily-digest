@@ -25,8 +25,9 @@ const CryptoPage: React.FC = () => {
                     })
                 .then(
                     (data) => {
-                        console.log('crypto response:', data.crypto)
+                        //console.log('crypto response:', data.crypto)
                         setCryptoData(data.crypto)
+                        //console.log('Testing', data.crypto.filter((data: Crypto) => data.name === 'Bitcoin'))
                     })
                 .catch(error => console.error('Error fetching data:', error));
         }
@@ -45,6 +46,20 @@ const CryptoPage: React.FC = () => {
         return num.toFixed(decimals);
     };
 
+    const getDataPoints = (name: string) => {
+        const data: Crypto[] =  cryptoData.filter((c: Crypto) => c.name === name)
+        const datapoints: number[] = [];
+        data.map((d: Crypto) => {
+            datapoints.push(d.quote.ZAR.volume_change_24h)
+        })
+        if (datapoints.length > 1) return datapoints; 
+        else  
+        for (let i = 0; i <= 12; i++){
+            datapoints.push(Math.random())
+        }
+        return datapoints;
+    }
+
     return (
         <>
             <h1>Crypto Markey Overview</h1>
@@ -58,6 +73,8 @@ const CryptoPage: React.FC = () => {
                             Heading={c.name}
                             Content={c.quote.ZAR.price}
                             Subcontent={c.quote.ZAR.percent_change_1h}
+                            isPositive={c.quote.ZAR.volume_change_24h > 0 ? true : false}
+                            datapoints={getDataPoints(c.name)}
                         />
                     ))
                 }

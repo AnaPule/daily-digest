@@ -1,5 +1,5 @@
 export default interface Crypto {
-    id: string;
+    id: number;
     max_supply: number;
     circulating_supply: number;
     cmc_rank: number;

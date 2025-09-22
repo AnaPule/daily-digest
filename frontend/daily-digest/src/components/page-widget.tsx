@@ -10,6 +10,7 @@ interface WidgetProps {
     Logo?: string;
     Subheading?: string;
     datapoints?: number[];
+    isPositive?: boolean;
 }
 
 const PageWidget: React.FC<WidgetProps> = ({
@@ -17,7 +18,8 @@ const PageWidget: React.FC<WidgetProps> = ({
     Heading,
     Content,
     Subcontent,
-    datapoints = [],
+    isPositive = false,
+    datapoints = []
 }: WidgetProps) => {
 
     // percentage change formatting
@@ -30,6 +32,37 @@ const PageWidget: React.FC<WidgetProps> = ({
             </span>
         );
     };
+
+    const generateLineChart = (data: number[]) => {
+        if (data.length < 2) return null;
+        
+        const width = 80;
+        const height = 30;
+        const padding = 2;
+        
+        const min = Math.min(...data);
+        const max = Math.max(...data);
+        const range = max - min || 1;
+        
+        const points = data.map((value, index) => {
+            const x = padding + (index / (data.length - 1)) * (width - 2 * padding);
+            const y = height - padding - ((value - min) / range) * (height - 2 * padding);
+            return `${x},${y}`;
+        }).join(' ');
+
+         return (
+            <svg width={width} height={height} className="line-chart">
+                <polyline
+                    points={points}
+                    fill="none"
+                    stroke={isPositive ? "#22c55e" : "#ef4444"}
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                />
+            </svg>
+        );
+    }
+
     return (
         <>
             <div className="page-widget">
@@ -49,10 +82,10 @@ const PageWidget: React.FC<WidgetProps> = ({
                     <div className="price-section">
                         <div className="main-price">R {Content.toFixed(2)}</div>
 
-                        {/* line chart 
+                        {/* line chart */}
                         <div className="chart-container">
                             {datapoints.length > 0 && generateLineChart(datapoints)}
-                        </div>*/}
+                        </div>
                     </div>
 
                     {/* sub content */}
