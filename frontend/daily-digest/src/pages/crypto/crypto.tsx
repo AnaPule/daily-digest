@@ -47,16 +47,16 @@ const CryptoPage: React.FC = () => {
     };
 
     const getDataPoints = (name: string) => {
-        const data: Crypto[] =  cryptoData.filter((c: Crypto) => c.name === name)
+        const data: Crypto[] = cryptoData.filter((c: Crypto) => c.name === name)
         const datapoints: number[] = [];
         data.map((d: Crypto) => {
             datapoints.push(d.quote.ZAR.volume_change_24h)
         })
-        if (datapoints.length > 1) return datapoints; 
-        else  
-        for (let i = 0; i <= 12; i++){
-            datapoints.push(Math.random())
-        }
+        if (datapoints.length > 1) return datapoints;
+        else
+            for (let i = 0; i <= 12; i++) {
+                datapoints.push(Math.random())
+            }
         return datapoints;
     }
 

@@ -1,8 +1,8 @@
 
-
-import React, { useState, useMemo } from 'react';
 import styles from './crypto.module.css'
 import type Crypto from '../../models/crypto';
+import Tooltip from '../../components/tooltip';
+import React, { useState, useMemo } from 'react';
 import { Info, Star, ChevronLeft, ChevronRight, ChevronLast, ChevronFirst, ChevronDown, Funnel, ArrowDownNarrowWide } from 'lucide-react';
 
 interface CryptoTableProps {
@@ -11,20 +11,63 @@ interface CryptoTableProps {
 
 const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
 
+    type SortState = 'none' | 'asc' | 'desc';
+    const [currentPage, setCurrentPage] = useState(1);//pagination
+    const [searchedValue, setSearchedValue] = useState<string>('') // searching 
     const [itemsPerPage, setItemsPerPage] = useState<number>(10); // Initial selected value
+    const [sortState, setSortState] = useState<SortState>('none'); // sorting according to name
 
-    //pagination
-    const [currentPage, setCurrentPage] = useState(1);
+
+    //sorting according to name
+    const sortData = () => {
+        setSortState(prev => {
+            switch (prev) {
+                case 'none': return 'asc';
+                case 'asc': return 'desc';
+                case 'desc': return 'none';
+                default: return 'none';
+            }
+        });
+    }
+
+    const sortedData = useMemo(() => {
+
+        const sorted = [...data];
+        if (sortState === 'none') {
+            return sorted;
+        }
+
+        sorted.sort((a: Crypto, b: Crypto) => {
+            return sortState === 'asc'
+                ? a.name.localeCompare(b.name)
+                : b.name.localeCompare(a.name);
+        });
+
+        return sorted;
+    }, [data, sortState]);
+
+    //searched data
+    const searchedData = useMemo(() => {
+
+        if (!searchedValue.trim()) {
+            return sortedData; // Return all data if search is empty
+        }
+
+        return sortedData.filter((c: Crypto) => {
+            return c.name.toLowerCase().includes(searchedValue.toLowerCase()) ||
+                c.symbol.toLowerCase().includes(searchedValue.toLowerCase());
+        })
+    }, [sortedData, searchedValue])
 
     const handleChange = (event: any) => {
         setItemsPerPage(event.target.value);
     };
 
     // Calculate pagination
-    const totalPages = Math.ceil(data.length / itemsPerPage); // 10 000 / 10
+    const totalPages = Math.ceil(searchedData.length / itemsPerPage); // 10 000 / 10
     const startIndex = (currentPage - 1) * itemsPerPage; //for example, (1 - 1) * 10
     const endIndex = startIndex + itemsPerPage;
-    const currentData = data.slice(startIndex, endIndex);
+    const currentData = searchedData.slice(startIndex, endIndex);
 
     // Generate page numbers for pagination
     const getPageNumbers = () => {
@@ -89,14 +132,26 @@ const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
         return Math.min(Math.max(percentage, 0), 100);
     };
 
+    const openNewLink = (url: string) => {
+        window.open(url, '_blank', 'noopener,noreferrer')
+    }
     return (
         <div className="crypto-table-container">
             <div className="table-header">
                 <div className="table-controls">
                     <div>
-                        <span className="control-item"> <ArrowDownNarrowWide size={20} /></span>
+                        <span
+                            onClick={() => sortData()}
+                            className="control-item"> <ArrowDownNarrowWide size={20} />
+                        </span>
                     </div>
-                    <div>
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <input
+                            placeholder='Search...'
+                            value={searchedValue}
+                            maxLength={20}
+                            onChange={(e) => { setSearchedValue(e.target.value) }}
+                        />
                         <span className="control-item"> <Funnel size={15} /> Price </span>
                         <span className="control-item"> <Funnel size={15} /> Market Cap</span>
                         <span className="control-item"> <Funnel size={15} /> Volume(24h)</span>
@@ -116,19 +171,63 @@ const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
                             <th>7d %</th>
                             <th>
                                 <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                    Market Cap <Info size={15} />
+                                    Market Cap
+                                    <Tooltip
+                                        content={
+                                            <>
+                                                The total market value of a cryptocurrency's circulating supply.
+                                                It is analogous to the free-float capitalization in the stock market.
+                                                <br /><br />
+                                                <strong>Formula:</strong> Market Cap = Current Price × Circulating Supply
+                                                <br /><br />
+                                                <p
+                                                    onClick={() => openNewLink('https://support.coinmarketcap.com/hc/en-us/articles/360043836811-Market-Capitalization-Cryptoasset-Aggregate')}
+                                                    className='tooltip-link'>Read more
+                                                </p>
+                                            </>
+                                        }
+                                    >
+                                        <Info size={15} className="tooltip-icon" />
+                                    </Tooltip>
+                                </span>
+                            </th>
+                            <th>
+                                <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    Volume (24h)
+                                    <Tooltip
+                                        content={
+                                            <>
+                                                A measure of how much of a cryptocurrency was traded in the last 24 hours.
+                                                <br /><br />
+                                                <p
+                                                    onClick={() => openNewLink('https://support.coinmarketcap.com/hc/en-us/articles/360043395912-Volume-Market-Pair-Cryptoasset-Exchange-Aggregate')}
+                                                    className='tooltip-link'>Read more
+                                                </p>
+                                            </>
+                                        }
+                                    >
+                                        <Info size={15} className="tooltip-icon" />
+                                    </Tooltip>
                                 </span>
 
                             </th>
                             <th>
                                 <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                    Volume (24h) <Info size={15} />
-                                </span>
+                                    Circulating Supply
+                                    <Tooltip
+                                        content={
+                                            <>
+                                                The amount of coins that are circulating in the market and are in public hands. It is analogous to the flowing shares in the stock market.
+                                                <br /><br />
+                                                <p
+                                                    onClick={() => openNewLink('https://support.coinmarketcap.com/hc/en-us/articles/360043396252-Supply-Circulating-Total-Max')}
+                                                    className='tooltip-link'>Read More</p>
+                                            </>
+                                        }
+                                    >
+                                        <Info size={15} className='tooltip-icon' />
+                                    </Tooltip>
 
-                            </th>
-                            <th>
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                    Circulating Supply <Info size={15} />
                                 </span>
 
                             </th>
@@ -173,23 +272,56 @@ const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
                                         </td>
                                         <td className={styles.supply}>
                                             <div className={styles.supplyInfo}>
-                                                <div>{formatNumber(c.circulating_supply, 2)} {c.symbol}</div>
 
-                                                {
-                                                    c.max_supply ? (
-                                                        <div className={styles.progressContainer}>
-                                                            <div className={styles.progressVisual}>
-                                                                <div className={styles.progressBarContainer}>
-                                                                    <div
-                                                                        className={styles.progressBarFill}
-                                                                        style={{
-                                                                            width: `${getProgressPercentage(c)}%`
-                                                                        }}>
-                                                                    </div>
-                                                                </div>
+                                                <Tooltip
+                                                    content={
+                                                        <>
+                                                            <div className={styles.percentage}>
+                                                                <p>Percentage</p>
+                                                                <p>{getProgressPercentage(c).toFixed(2)}%</p>
                                                             </div>
-                                                        </div>) : null
-                                                }
+
+                                                            {
+                                                                c.max_supply ? (
+                                                                    <div className={styles.progressContainer}>
+                                                                        <div className={styles.progressVisual}>
+                                                                            <div className={styles.progressBarContainer}>
+                                                                                <div
+                                                                                    className={styles.progressBarFill}
+                                                                                    style={{
+                                                                                        width: `${getProgressPercentage(c)}%`
+                                                                                    }}>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>) : null
+                                                            }
+                                                        </>
+                                                    }
+                                                >
+                                                    <section>
+                                                        <div>{formatNumber(c.circulating_supply, 2)} {c.symbol}</div>
+                                                        {
+                                                            c.max_supply ? (
+                                                                <div className={styles.progressContainer}>
+                                                                    <div className={styles.progressVisual}>
+                                                                        <div className={styles.progressBarContainer}>
+                                                                            <div
+                                                                                className={styles.progressBarFill}
+                                                                                style={{
+                                                                                    width: `${getProgressPercentage(c)}%`
+                                                                                }}>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>) : null
+                                                        }
+                                                    </section>
+
+
+                                                </Tooltip>
+
+
 
                                             </div>
                                         </td>
@@ -199,10 +331,10 @@ const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
                         }
                     </tbody>
                 </table>
-            </div>
+            </div >
 
             {/* pagination */}
-            <div className="pagination-container">
+            <div className="pagination-container" >
                 <div className={styles.specific}>
                     <select
                         id="pagination-dropdown"
@@ -261,8 +393,8 @@ const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
                 <div className="pagination-info">
                     Showing {startIndex + 1}-{Math.min(endIndex, data.length)} of {data.length}
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 export default CryptoTable;
