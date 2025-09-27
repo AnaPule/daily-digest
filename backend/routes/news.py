@@ -1,7 +1,9 @@
 import pymongo
 from flask import Blueprint, jsonify
 from datetime import date, timedelta
-from backend.database.db import getdatabase # Absolute import
+
+from ..database.db import getdatabase ## relative import
+
 news_bp = Blueprint('news', __name__)
 db = getdatabase()
 
