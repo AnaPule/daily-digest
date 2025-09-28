@@ -38,4 +38,17 @@
 
 .Logo {
     font-size: 48px;
+    display: inline-block;
+    animation: spin 2s linear infinite;
+}
+
+/* Keyframe animation for endless rotation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
