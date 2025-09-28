@@ -1,7 +1,10 @@
 import pymongo
 from flask import Blueprint, jsonify
 from datetime import date, timedelta
-from backend.database.db import getdatabase # Absolute import
+
+## from backend.database.db import getdatabase # Absolute import
+from ..database.db import getdatabase
+
 article_bp = Blueprint('article', __name__)
 db = getdatabase()
 
@@ -18,7 +21,7 @@ def getArticles():
                 'pubDate': {'$gte': start_of_week.isoformat()}
             }, {'_id': 0})
             .sort('pubDate', pymongo.ASCENDING)
-            .limit(10)
+            ##.limit(30)
         )
 
         return jsonify({

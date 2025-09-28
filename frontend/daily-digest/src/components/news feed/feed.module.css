@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     white-space: nowrap;
-    animation: scrollTicker 500s linear infinite;
+    animation: scrollTicker 1000s linear infinite;
     will-change: transform;
 }
 

@@ -45,7 +45,7 @@ def getGeneral():
                 'pubDate': {'$gte': start_of_week.isoformat()}
             }, {'_id': 0})
             .sort('pubDate', pymongo.ASCENDING)
-            .limit(10)
+            ## .limit(10)
         )
 
         return jsonify({
@@ -63,9 +63,10 @@ def getGeneral():
 def getArticles():
     try:
         articles = list(
-            db.general.find({}, {'_id': 0})
+            db.general
+            .find({}, {'_id': 0})
             .sort('pubDate', pymongo.ASCENDING)
-            .limit(10)
+            ##.limit(10)
         )
 
         return jsonify({
