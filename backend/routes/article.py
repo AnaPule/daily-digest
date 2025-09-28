@@ -21,6 +21,7 @@ def getArticles():
                 'pubDate': {'$gte': start_of_week.isoformat()}
             }, {'_id': 0})
             .sort('pubDate', pymongo.ASCENDING)
+            #.distinct('title')
             ##.limit(30)
         )
 

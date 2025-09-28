@@ -1,4 +1,6 @@
 from .crypto_currency import fetch_crypto_data
+from .articles import fetch_general_news
+from .news import fetch_headlines
 
 """
     __init__.py is a special Python file that makes a directory into a Python package.

@@ -30,7 +30,7 @@ const CryptoPage: React.FC = () => {
                 .catch(error => console.error('Error fetching data:', error));
         }
         fetchData();
-        const interval = setInterval(fetchData, 300000); // Every 5 minutes
+        const interval = setInterval(fetchData, 60000); // Every 1 minutes
         return () => clearInterval(interval);
     }, [])
 

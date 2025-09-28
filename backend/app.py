@@ -13,22 +13,36 @@ from flask_cors import CORS  # For handling Cross-Origin Resource Sharing
 from backend.routes import article_bp, crypto_bp, news_bp
 
 ## utils
-from backend.utils import fetch_crypto_data
+from backend.utils import fetch_crypto_data, fetch_general_news, fetch_headlines
 
 load_dotenv()
 
 # Initialize scheduler
 scheduler = BackgroundScheduler()
 scheduler.add_job(
-    func=fetch_crypto_data,
-    trigger=IntervalTrigger(minutes=5),
-    id='crypto_update',
-    name='Update crypto data every minute'
+    func = fetch_crypto_data,
+    trigger = IntervalTrigger(minutes = 5),
+    id = 'crypto update',
+    name = 'Update crypto data every 5 minutes'
+)
+scheduler.add_job(
+    func = fetch_general_news,
+    trigger = IntervalTrigger(minutes = 10),
+    id = 'general news update',
+    name='General news update every 10 minutes'
+)
+
+scheduler.add_job(
+    func = fetch_headlines,
+    trigger = IntervalTrigger(minutes = 10),
+    id = 'headlines update',
+    name='Headline update every 10 minutes'
 )
 scheduler.start()
 
 ## run the function to fetch the data immediatly
 fetch_crypto_data()
+fetch_general_news()
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes

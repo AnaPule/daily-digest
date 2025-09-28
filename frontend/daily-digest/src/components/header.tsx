@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({
                 <h2 className="primary-text">
                     {heading}
                     <br />
-                    <h4 className="secondary-text">{subheading}</h4>
+                    <p className="secondary-text">{subheading}</p>
                 </h2>
             </div>
         </div>

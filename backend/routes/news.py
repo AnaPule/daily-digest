@@ -15,11 +15,9 @@ def getHeadlines():
 
     try:
         news = list(
-            db.news.find({
-                'published_at': {'$gte': start_of_week.isoformat()}
-            }, {'_id': 0})
+            db.news.find({}, {'_id': 0})
             .sort('pubDate', pymongo.ASCENDING)
-            .limit(10)
+            ##.limit(10)
         )
 
         return jsonify({
@@ -61,11 +59,14 @@ def getGeneral():
         
 @news_bp.route('/', methods=['GET'])     
 def getArticles():
+    start_of_week = date.today() - timedelta(days=date.today().weekday())
+    
     try:
         articles = list(
             db.general
             .find({}, {'_id': 0})
             .sort('pubDate', pymongo.ASCENDING)
+            ##.distinct('title')
             ##.limit(10)
         )
 

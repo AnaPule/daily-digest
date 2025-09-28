@@ -42,7 +42,7 @@ const NewsDigest: React.FC = () => {
         };
 
         fetchGeneral();
-        const interval = setInterval(fetchGeneral, 300000); // Every 5 minutes
+        const interval = setInterval(fetchGeneral, 60000); // Every 1 minutes
         return () => clearInterval(interval);
     }, []);
 
@@ -58,7 +58,7 @@ const NewsDigest: React.FC = () => {
         };
 
         fetchHeadlines();
-        const interval = setInterval(fetchHeadlines, 300000); // Every 5 minutes
+        const interval = setInterval(fetchHeadlines, 60000); // Every 1 minutes
         return () => clearInterval(interval);
     }, []);
 

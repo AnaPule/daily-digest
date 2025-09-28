@@ -34,22 +34,23 @@ end_of_week = date.today() + timedelta(days=date.today().weekday())
 """
 from newsdataapi import NewsDataApiClient
 
-api = NewsDataApiClient (apikey=os.getenv('NEWS_API_KEY'))
+def fetch_general_news():
+    api = NewsDataApiClient (apikey=os.getenv('NEWS_API_KEY'))
     # response = api.news_api(q="general", country="za")
-# Use the latest API method as suggested in the warning
-try:
-    # Try the new method name
-    response = api.latest_api(q="general", country="za")
-except AttributeError:
-    # Fallback to the old method if latest_api doesn't exist
-    response = api.news_api(q="general", country="za")
-print("general articles successfully retrieved")
-#print(f"{response}")
-
-
-client = MongoClient(os.getenv('DATABASE_URL'))
-db = client[os.getenv('DATABASE')]
-#db.create_collection('headlines')
-## format: database.collection.function
-db.general.insert_many(response['results'])
-print("general articles successfully saved")
+    # Use the latest API method as suggested in the warning
+    try:
+        # Try the new method name
+        response = api.latest_api(q="general", country="za")
+        print("general articles successfully retrieved")
+    except AttributeError:
+        # Fallback to the old method if latest_api doesn't exist
+        response = api.news_api(q="general", country="za")
+        print("error fetching latest articles: ", AttributeError)
+    #print(f"{response}")
+    
+    client = MongoClient(os.getenv('DATABASE_URL'))
+    db = client[os.getenv('DATABASE')]
+    #db.create_collection('headlines')
+    ## format: database.collection.function
+    db.general.insert_many(response['results'])
+    print("general articles successfully saved")

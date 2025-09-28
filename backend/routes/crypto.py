@@ -1,10 +1,14 @@
+
+from datetime import date, timedelta
 from flask import Blueprint, jsonify
 from backend.database.db import getdatabase
+
 crypto_bp = Blueprint('crypto', __name__)
 db = getdatabase()
 
 @crypto_bp.route('/', methods=['GET'])
 def get_crypto():
+    start_of_week = date.today() - timedelta(days=date.today().weekday())
     try:
         # Get latest crypto data
         crypto_data = list(
