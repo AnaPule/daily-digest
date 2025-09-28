@@ -50,15 +50,28 @@ h6 {
 .widget-header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 2px;
   margin-bottom: 5px;
+  width: 100%; 
 }
 
-widget-title {
+.widget-title {
   color: #ffffff;
   font-size: 16px;
   font-weight: 500;
   margin: 0;
+  
+  /* Ellipsis properties */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  min-width: 0; /* Crucial for flex children */
+}
+
+.widget-title:hover {
+  overflow: visible;
+  white-space: normal; /* Allow wrapping on hover */
 }
 
 .widget-content {

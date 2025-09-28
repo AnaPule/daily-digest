@@ -15,7 +15,7 @@ interface PageProps {
 
 const PageTemplate: React.FC<PageProps> = ({children}) => {
 
-    const [activeSection, setActiveSection] = useState<ActiveSection>('news');
+    const [activeSection, setActiveSection] = useState<ActiveSection>('crypto');
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const [isNavCollapsed, setIsNavCollapsed] = useState(false);
 

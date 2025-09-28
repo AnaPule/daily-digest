@@ -1,4 +1,4 @@
-
+import pymongo
 from datetime import date, timedelta
 from flask import Blueprint, jsonify
 from backend.database.db import getdatabase
@@ -14,8 +14,8 @@ def get_crypto():
         crypto_data = list(
             db.cryptocurrency
             .find({}, {'_id': 0})
-            .sort('timestamp', -1)
-            .limit(100))
+            .sort('last_updated', pymongo.DESCENDING)
+            .limit(50))
 
         return jsonify({
             'status': '200',

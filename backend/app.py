@@ -19,6 +19,7 @@ load_dotenv()
 
 # Initialize scheduler
 scheduler = BackgroundScheduler()
+'''
 scheduler.add_job(
     func = fetch_crypto_data,
     trigger = IntervalTrigger(minutes = 5),
@@ -38,6 +39,7 @@ scheduler.add_job(
     id = 'headlines update',
     name='Headline update every 10 minutes'
 )
+'''
 scheduler.start()
 
 ## run the function to fetch the data immediatly
