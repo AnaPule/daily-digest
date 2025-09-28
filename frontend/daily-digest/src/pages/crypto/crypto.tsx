@@ -10,8 +10,8 @@ import PageWidget from "../../components/page-widget";
 import PageTemplate from "../../components/page/page-template";
 
 //models
-import type Crypto from '../../models/crypto';
 import { X } from "lucide-react";
+import type Crypto from '../../models/crypto';
 
 const CryptoPage: React.FC = () => {
 

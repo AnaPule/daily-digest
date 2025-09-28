@@ -58,3 +58,23 @@ def getGeneral():
             'status': '500',
             'message': f'An error has occurred: {e}'
         })
+        
+@news_bp.route('/', methods=['GET'])     
+def getArticles():
+    try:
+        articles = list(
+            db.general.find({}, {'_id': 0})
+            .sort('pubDate', pymongo.ASCENDING)
+            .limit(10)
+        )
+
+        return jsonify({
+            'status': '200',
+            'articles': articles
+         })
+    except Exception as e:
+        print(f'An error has occurred: {e}')
+        return jsonify({
+            'status': '500',
+            'message': f'An error has occurred: {e}'
+        })

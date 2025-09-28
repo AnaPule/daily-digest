@@ -6,7 +6,7 @@ import { useState, useEffect, Children } from "react";
 import NavBar from "../navigation/nav";
 import styles from '../nav.module.css';
 import CryptoPage from "../../pages/crypto/crypto";
-import DailyDigest from "../../pages/general news/daily-digest";
+import DailyDigest from "../../pages/general news/news-digest";
 
 type ActiveSection = 'crypto' | 'news';
 interface PageProps {
