@@ -1,7 +1,10 @@
 import pymongo
 from flask import Blueprint, jsonify
 from datetime import date, timedelta
-from backend.database.db import getdatabase # Absolute import
+
+## from backend.database.db import getdatabase # Absolute import
+from ..database.db import getdatabase
+
 article_bp = Blueprint('article', __name__)
 db = getdatabase()
 
@@ -14,16 +17,16 @@ def getArticles():
 
     try:
         articles = list(
-            db.headlines.find({
+            db.general.find({
                 'pubDate': {'$gte': start_of_week.isoformat()}
             }, {'_id': 0})
             .sort('pubDate', pymongo.ASCENDING)
-            .limit(5)
+            ##.limit(30)
         )
 
         return jsonify({
             'status': '200',
-            'headlines': articles
+            'general': articles
          })
     except Exception as e:
         print(f'An error has occurred: {e}')

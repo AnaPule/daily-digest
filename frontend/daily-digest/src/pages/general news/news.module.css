@@ -1,0 +1,369 @@
+/* =================================
+   NEWSPAPER CONTAINER
+   ================================= */
+.newspaperContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  direction: rtl;
+  text-align: left;
+  border: 0.5px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  overflow-x: scroll;
+}
+
+/* =================================
+   HEADER SECTION
+   ================================= */
+.newspaperHeader {
+  display: grid;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #1a1d29 0%, #2a2d3a 100%);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.headerCenter {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.newspaperLogo {
+  font-size: 48px;
+}
+
+/* =================================
+   MAIN CONTENT GRID
+   ================================= */
+.mainHeadline {
+  text-align: center;
+  text-transform: uppercase;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  letter-spacing: 1rem;
+  color: #41455b;
+  margin-bottom: 20px;
+}
+
+.mainContent {
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  gap: 20px;
+  padding: 20px;
+  min-height: 700px;
+}
+
+/* =================================
+   LEFT SIDEBAR (POLITICS & SPORTS)
+   ================================= */
+.leftSidebar {
+  min-height: 670px;
+  max-height: 680px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.leftSidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.leftSidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.leftSidebar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* =================================
+   CENTER CONTENT (HEADLINES)
+   ================================= */
+.centerContent {
+  padding: 0 15px;
+  min-height: 600px;
+  max-height: 600px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.centerContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.centerContent::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.centerContent::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* Headline Articles */
+.headlineArticle {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.headlineImage {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.articleColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.column {
+  padding: 0 8px;
+}
+
+.column p {
+  font-size: small;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  text-align: left;
+  color: #666;
+  hyphens: auto;
+  word-wrap: break-word;
+}
+
+/* =================================
+   RIGHT SIDEBAR (BUSINESS & ENTERTAINMENT)
+   ================================= */
+.rightSidebar {
+  padding-left: 15px;
+  min-height: 670px;
+  max-height: 670px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.rightSidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.rightSidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.rightSidebar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+/* =================================
+   SIDEBAR ARTICLES (SHARED STYLES)
+   ================================= */
+.rightSidebarArticle {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.articleHeader {
+  align-items: flex-start;
+  margin-bottom: 8px;
+  gap: 10px;
+}
+
+.articleMeta h4 {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  color: #7e7d7d;
+}
+
+.sourceName {
+  font-weight: 700;
+  font-size: 11px;
+  color: #a70000;
+}
+
+/* =================================
+   SECTION HEADERS (QUOTE BOXES)
+   ================================= */
+.rightQuote {
+  background: #000;
+  color: white;
+  padding: 10px;
+  margin: 20px 0;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.rightQuote p {
+  font-size: medium;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* =================================
+   FOOTER
+   ================================= */
+.newspaperFooter {
+  border-top: 2px solid #000;
+  padding: 10px 20px;
+  background: #f9f9f9;
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: #666;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* =================================
+   RESPONSIVE BREAKPOINTS
+   ================================= */
+
+/* Tablet (1024px and down) */
+@media (max-width: 1024px) {
+  .mainContent {
+    grid-template-columns: 200px 1fr 250px;
+    gap: 15px;
+    min-height: auto;
+  }
+
+  .mainHeadline {
+    letter-spacing: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  .leftSidebar,
+  .rightSidebar,
+  .centerContent {
+    max-height: 500px;
+    min-height: 400px;
+  }
+}
+
+/* Mobile (768px and down) */
+@media (max-width: 768px) {
+  .newspaperContainer {
+    margin: 0;
+    border: none;
+    box-shadow: none;
+  }
+
+  .newspaperHeader {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .newspaperLogo {
+    font-size: 36px;
+  }
+
+  .mainHeadline {
+    letter-spacing: 0.2rem;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .mainContent {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 15px;
+    min-height: auto;
+  }
+
+  .leftSidebar,
+  .rightSidebar {
+    max-height: none;
+    min-height: auto;
+    overflow-y: visible;
+    padding-left: 0;
+  }
+
+  .centerContent {
+    max-height: none;
+    min-height: auto;
+    overflow-y: visible;
+    padding: 0;
+  }
+
+  .articleColumns {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .column {
+    padding: 0;
+  }
+
+  .headlineImage {
+    height: 200px;
+  }
+
+  .footerContent {
+    justify-content: center;
+    text-align: center;
+    font-size: 9px;
+  }
+}
+
+/* Small Mobile (480px and down) */
+@media (max-width: 480px) {
+  .newspaperHeader {
+    padding: 10px;
+  }
+
+  .newspaperLogo {
+    font-size: 28px;
+  }
+
+  .mainContent {
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .mainHeadline {
+    letter-spacing: 0.1rem;
+    font-size: 1rem;
+  }
+
+  .headlineImage {
+    height: 150px;
+  }
+
+  .column p {
+    font-size: x-small;
+    line-height: 1.4;
+  }
+
+  .articleMeta h4 {
+    font-size: 11px;
+  }
+
+  .sourceName {
+    font-size: 10px;
+  }
+
+  .rightQuote p {
+    font-size: small;
+  }
+}

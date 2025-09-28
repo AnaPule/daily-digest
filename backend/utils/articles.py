@@ -43,7 +43,7 @@ try:
 except AttributeError:
     # Fallback to the old method if latest_api doesn't exist
     response = api.news_api(q="general", country="za")
-print("headlines successfully retrieved")
+print("general articles successfully retrieved")
 #print(f"{response}")
 
 
@@ -51,5 +51,5 @@ client = MongoClient(os.getenv('DATABASE_URL'))
 db = client[os.getenv('DATABASE')]
 #db.create_collection('headlines')
 ## format: database.collection.function
-db.headlines.insert_many(response['results'])
-print("headlines successfully saved")
+db.general.insert_many(response['results'])
+print("general articles successfully saved")

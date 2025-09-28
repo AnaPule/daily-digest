@@ -1,5 +1,8 @@
 from .article import article_bp
 from .crypto import crypto_bp
+from .news import news_bp
+
+__all__ = ['article_bp', 'crypto_bp', 'news_bp']
 
 """
     __init__.py is a special Python file that makes a directory into a Python package.

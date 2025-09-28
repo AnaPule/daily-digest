@@ -1,0 +1,78 @@
+.headlineStrip {
+    height: 40px;
+    background: #41455b;
+    overflow: hidden;
+    position: relative;
+    border-top: 0.5px solid #fff;
+    border-bottom: 0.5px solid #fff;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.tickerWrapper {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: scrollTicker 1000s linear infinite;
+    will-change: transform;
+}
+
+.tickerContent {
+    display: flex;
+    align-items: center;
+}
+
+.tickerItem {
+    color: white;
+    display: inline-flex;
+    gap: 10px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: color 0.2s ease;
+}
+
+.tickerItem:hover {
+    color: #646464;
+}
+
+@keyframes scrollTicker {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Ensure continuous animation - never stops */
+.ticker-wrapper {
+    animation-play-state: running !important;
+}
+
+/* Optional: Add a subtle gradient fade on edges for polish */
+.headlineStrip::before,
+.headlineStrip::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.headlineStrip::before {
+    left: 0;
+    background: linear-gradient(to right, #41455b, transparent);
+}
+
+.headlineStrip::after {
+    right: 0;
+    background: linear-gradient(to left, #41455b, transparent);
+}
+
+.headlineStrip:hover .tickerWrapper {
+  animation-play-state: paused;
+}

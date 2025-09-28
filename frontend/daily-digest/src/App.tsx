@@ -2,15 +2,18 @@
 import './App.css'
 
 import CryptoPage from './pages/crypto/crypto';
-import DailyDigest from './pages/general news/daily-digest';
+import NewsDigest from './pages/general news/news-digest';
+import PageTemplate from './components/page/page-template';
 
 function App() {
 
   return (
-    <>
-    <CryptoPage />
-    {/* <DailyDigest /> */}
-    </>
+    <PageTemplate>
+
+      <CryptoPage />
+      <NewsDigest />
+
+    </PageTemplate>
   )
 }
 

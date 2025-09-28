@@ -1,16 +1,14 @@
 
 //react
 import React, { useEffect, useState } from "react";
-import io from 'socket.io-client';
 
 //components
-import styles from './crypto.module.css';
 import CryptoTable from "./cryptoTable";
-import PageWidget from "../../components/page-widget";
+import Header from "@/components/header";
+import PageWidget from "@/components/page-widget";
 
 //models
-import type Crypto from '../../models/crypto';
-import { X } from "lucide-react";
+import type Crypto from "@/models/crypto";
 
 const CryptoPage: React.FC = () => {
 
@@ -37,14 +35,6 @@ const CryptoPage: React.FC = () => {
     }, [])
 
     const sortedData = cryptoData.sort((c: Crypto) => c.cmc_rank).slice(0, 6)
-    // prices and changes in prices formated to suit their units (shorter formation)
-    const formatNumber = (num: number, decimals: number = 2) => {
-        if (num >= 1e12) return `R {(num / 1e12).toFixed(1)} T`;
-        if (num >= 1e9) return `R {(num / 1e9).toFixed(2)} B`;
-        if (num >= 1e6) return `R {(num / 1e6).toFixed(2)} M`;
-        if (num >= 1e3) return `R {(num / 1e3).toFixed(2)} K`;
-        return num.toFixed(decimals);
-    };
 
     const getDataPoints = (name: string) => {
         const data: Crypto[] = cryptoData.filter((c: Crypto) => c.name === name)
@@ -62,8 +52,12 @@ const CryptoPage: React.FC = () => {
 
     return (
         <>
-            <h1>Crypto Markey Overview</h1>
-            <p className="secondary-text">Stap updated on the latest cryptocurrency trends, including bitcoin dominance, altcoin season, ETF net flows, and real-time market centiment, all conveniently accessible in one place</p>
+            <header>
+                <Header
+                    heading={'Crypto Markey Overview'}
+                    subheading={'Stap updated on the latest cryptocurrency trends, including bitcoin dominance, altcoin season, ETF net flows, and real-time market centiment, all conveniently accessible in one place'}
+                />
+            </header>
 
             {/* stats header */}
             <section className="stats-wrapper">
