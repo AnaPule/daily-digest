@@ -3,6 +3,9 @@ import { HugeiconsIcon } from '@hugeicons/react';
 import React, { useEffect, useState } from 'react';
 import { Facebook01FreeIcons, InstagramIcon, NewTwitterRectangleIcon, Linkedin01Icon } from '@hugeicons/core-free-icons';
 
+//components
+import PageTemplate from '../../components/page/page-template';
+
 //models
 import type Crypto from '../../models/crypto';
 
@@ -26,7 +29,7 @@ const DailyDigest: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <PageTemplate>
             {/* Header */}
             <header className={styles.header}>
                 <div className={styles.topBar}>
@@ -350,7 +353,7 @@ const DailyDigest: React.FC = () => {
                     </article>
                 </aside>
             </div>
-        </>
+        </PageTemplate>
     );
 }
 

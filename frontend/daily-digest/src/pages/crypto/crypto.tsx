@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import styles from './crypto.module.css';
 import CryptoTable from "./cryptoTable";
 import PageWidget from "../../components/page-widget";
+import PageTemplate from "../../components/page/page-template";
 
 //models
 import type Crypto from '../../models/crypto';
@@ -61,7 +62,7 @@ const CryptoPage: React.FC = () => {
     }
 
     return (
-        <>
+        <PageTemplate>
             <h1>Crypto Markey Overview</h1>
             <p className="secondary-text">Stap updated on the latest cryptocurrency trends, including bitcoin dominance, altcoin season, ETF net flows, and real-time market centiment, all conveniently accessible in one place</p>
 
@@ -133,7 +134,7 @@ const CryptoPage: React.FC = () => {
             <CryptoTable
                 data={cryptoData}
             />
-        </>
+        </PageTemplate>
     );
 }
 export default CryptoPage;

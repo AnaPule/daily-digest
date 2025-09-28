@@ -8,8 +8,9 @@ function App() {
 
   return (
     <>
-    <CryptoPage />
-    {/* <DailyDigest /> */}
+     <DailyDigest /> 
+    {/* <CryptoPage /> */}
+    
     </>
   )
 }
