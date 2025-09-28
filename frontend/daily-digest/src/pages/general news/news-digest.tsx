@@ -5,8 +5,8 @@ import { Facebook01FreeIcons, InstagramIcon, NewTwitterRectangleIcon, Linkedin01
 import { Codesandbox, Newspaper, ChartNoAxesCombined } from 'lucide-react';
 
 //components
-import NewsFeed from '../../components/news feed/news-feed';
-import PageTemplate from '../../components/page/page-template';
+import Header from '@/components/header';
+import NewsFeed from '@/components/news feed/news-feed';
 
 //models
 import styles from './news.module.css';
@@ -132,20 +132,12 @@ const NewsDigest: React.FC = () => {
     );
 
     return (
-        <PageTemplate>
+        <>
+        
             <div className={styles.newspaperContainer}>
                 {/* Header */}
-                <header className={styles.newspaperHeader}>
-                    <div className={styles.headerCenter}>
-                        <div className={styles.newspaperLogo}>
-                            <Codesandbox size={isMobile ? 28 : 35} />
-                        </div>
-                        <h2 className="primary-text">
-                            Daily Digest
-                            <br />
-                            <h4 className="secondary-text">Your daily real-time information hub</h4>
-                        </h2>
-                    </div>
+                <header>
+                    <Header />
                 </header>
 
                 {/* Headlines line */}
@@ -239,7 +231,7 @@ const NewsDigest: React.FC = () => {
                     </div>
                 </footer>
             </div>
-        </PageTemplate>
+        </>
     );
 };
 

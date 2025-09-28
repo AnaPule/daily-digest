@@ -51,7 +51,7 @@ const PageTemplate: React.FC<PageProps> = ({children}) => {
                 onCollapseChange={handleNavCollapse}
             />
             <main className={styles.mainContent}>
-                {children}
+                {renderContent()}
             </main>
         </div>
     );

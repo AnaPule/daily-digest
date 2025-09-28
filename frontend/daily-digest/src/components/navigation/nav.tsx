@@ -66,7 +66,6 @@ const NavBar: React.FC<NavbarProps> = ({ onSectionChange, activeSection, onColla
                 }
               }}
             >
-             
               {!isCollapsed && <span> <ChartNoAxesCombined /> Crypto</span>}
               {isCollapsed && <span className={styles.tooltip}> <ChartNoAxesCombined /> </span>}
             </button>

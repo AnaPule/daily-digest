@@ -69,8 +69,8 @@
 
 .navLink {
   display: flex;
-  align-items: center;
-  padding: 15px 20px;
+  padding: 10px 20px;
+  
   color: white;
   text-decoration: none;
   transition: all 0.3s ease;
