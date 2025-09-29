@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Codesandbox} from 'lucide-react';
+import { Codesandbox } from 'lucide-react';
 
 //components
 import Header from '@/components/header';
@@ -97,44 +97,47 @@ const NewsDigest: React.FC = () => {
                     <p>{title}</p>
                 </div>
             </div>
-            {articleData
-                .filter((a) => a.category.includes(category))
-                .map((article, index) => (
-                    <article key={`${category}-${index}`} className={styles.rightSidebarArticle}>
-                        <div className={styles.articleHeader}>
-                            <div className={styles.articleMeta}>
-                                <h4 style={{direction: 'ltr'}}>{article.title}</h4>
-                                <span
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        flexWrap: 'wrap',
-                                        gap: '8px',
-                                        fontWeight: '700',
-                                        fontSize: '11px',
-                                    }}
-                                    className={`secondary-text`}
-                                >
-                                    <span>{article.source_name}</span>
-                                    <div
-                                        onClick={() => window.open(article.link, '_blank')}
-                                        className="tooltip-link"
+            <div className={styles.articles}>
+                {articleData
+                    .filter((a) => a.category.includes(category))
+                    .map((article, index) => (
+                        <article key={`${category}-${index}`} className={styles.rightSidebarArticle}>
+                            <div className={styles.articleHeader}>
+                                <div className={styles.articleMeta}>
+                                    <h3 className={`secondary-text`} style={{ direction: 'ltr', fontSize: 'medium', fontWeight: '600' }}>{article.title}</h3>
+                                    <span
                                         style={{
-                                            fontSize: 'x-small',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            flexWrap: 'wrap',
+                                            gap: '8px',
                                             fontWeight: '700',
-                                            cursor: 'pointer',
-                                            color: '#007acc'
+                                            fontSize: '11px',
                                         }}
+                                        className={`secondary-text`}
                                     >
-                                        Read More
-                                    </div>
-                                </span>
+                                        <span>{article.source_name}</span>
+                                        <div
+                                            onClick={() => window.open(article.link, '_blank')}
+                                            className="tooltip-link"
+                                            style={{
+                                                fontSize: 'x-small',
+                                                fontWeight: '700',
+                                                cursor: 'pointer',
+                                                color: '#007acc'
+                                            }}
+                                        >
+                                            Read More
+                                        </div>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-                ))
-            }
+                        </article>
+                    ))
+                }
+            </div>
+
         </div >
     );
 
@@ -149,7 +152,7 @@ const NewsDigest: React.FC = () => {
 
                 {
                     loading ? (
-                        <div style={{display:'flex', justifyContent:'center', margin: '10px 0', direction:'ltr'}}>
+                        <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0', direction: 'ltr' }}>
                             <Throbber />
                         </div>
                     ) : (

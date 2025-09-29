@@ -2,7 +2,7 @@
    NEWSPAPER CONTAINER
    ================================= */
 .newspaperContainer {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   direction: rtl;
   text-align: left;
@@ -51,7 +51,7 @@
 
 .mainContent {
   display: grid;
-  grid-template-columns: 250px 1fr 300px;
+  grid-template-columns: 300px 1fr 300px;
   gap: 20px;
   padding: 20px;
   min-height: 700px;
@@ -61,8 +61,9 @@
    LEFT SIDEBAR (POLITICS & SPORTS)
    ================================= */
 .leftSidebar {
+  padding-left: 15px;
   min-height: 670px;
-  max-height: 680px;
+  max-height: 670px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
@@ -115,11 +116,27 @@
 
 .headlineImage {
   width: 100%;
-  height: 250px;
+  height: 450px;
   object-fit: cover;
+  object-position: center;
   border: 1px solid #ccc;
   margin-bottom: 8px;
   border-radius: 4px;
+  background-color:#1a1d29;
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .headlineImage {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .headlineImage {
+    height: 150px;
+  }
 }
 
 .articleColumns {
@@ -176,6 +193,14 @@
   margin-bottom: 20px;
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
+
+  font-size: medium;
+}
+
+.articles{
+max-height: 550px;
+overflow-y: scroll;
+cursor:all-scroll
 }
 
 .articleHeader {
@@ -243,7 +268,7 @@
 /* Tablet (1024px and down) */
 @media (max-width: 1024px) {
   .mainContent {
-    grid-template-columns: 200px 1fr 250px;
+    grid-template-columns: 200px 1fr 200px;
     gap: 15px;
     min-height: auto;
   }

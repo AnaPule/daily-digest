@@ -22,7 +22,7 @@ scheduler = BackgroundScheduler()
 '''
 scheduler.add_job(
     func = fetch_crypto_data,
-    trigger = IntervalTrigger(minutes = 5),
+    trigger = IntervalTrigger(minutes = 10),
     id = 'crypto update',
     name = 'Update crypto data every 5 minutes'
 )
@@ -39,14 +39,13 @@ scheduler.add_job(
     id = 'headlines update',
     name='Headline update every 10 minutes'
 )
-
-
 '''
 scheduler.start()
 
 ## run the function to fetch the data immediatly
-##fetch_crypto_data()
-##fetch_general_news()
+## fetch_crypto_data()
+## fetch_general_news()
+## fetch_headlines()
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes

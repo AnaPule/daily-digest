@@ -8,16 +8,16 @@
 .mainContent {
     flex: 1;
     margin-left: 300px; /* Sidebar is 300px, so we start after it */
-    padding: 40px;
+    padding: 20px;
     min-height: 100vh;
     overflow: auto;
-    width: calc(100% - 300px); /* Make mainContent take remaining width */
+    width: calc(100% - 50px); /* Make mainContent take remaining width */
 }
 
 /* When sidebar is collapsed (70px), make mainContent even wider */
 .sidenav.collapsed ~ .mainContent {
-    margin-left: 70px;
-    width: calc(100% - 70px); /* More space when sidebar collapsed */
+    margin-left: 20px;
+    width: calc(100% - 20px); /* More space when sidebar collapsed */
     padding: 40px;
 }
 
