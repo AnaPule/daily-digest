@@ -39,12 +39,14 @@ scheduler.add_job(
     id = 'headlines update',
     name='Headline update every 10 minutes'
 )
+
+
 '''
 scheduler.start()
 
 ## run the function to fetch the data immediatly
-fetch_crypto_data()
-fetch_general_news()
+##fetch_crypto_data()
+##fetch_general_news()
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes

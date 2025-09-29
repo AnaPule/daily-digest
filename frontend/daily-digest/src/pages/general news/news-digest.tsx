@@ -1,11 +1,11 @@
-import { HugeiconsIcon } from '@hugeicons/react';
-import React, { useEffect, useState } from 'react';
-import { Facebook01FreeIcons, InstagramIcon, NewTwitterRectangleIcon, Linkedin01Icon } from '@hugeicons/core-free-icons';
 
-import { Codesandbox, Newspaper, ChartNoAxesCombined } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+
+import { Codesandbox} from 'lucide-react';
 
 //components
 import Header from '@/components/header';
+import Throbber from '@/components/loader/loader';
 import NewsFeed from '@/components/news feed/news-feed';
 
 //models
@@ -16,6 +16,7 @@ const NewsDigest: React.FC = () => {
 
     const [articleData, setArticleData] = useState<Article[]>([]);
     const [headlines, setHeadlines] = useState<Headline[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState(false);
 
     // Check for mobile screen size
@@ -31,6 +32,7 @@ const NewsDigest: React.FC = () => {
     }, []);
 
     useEffect(() => {
+        setLoading(true)
         const fetchGeneral = async () => {
             try {
                 const response = await fetch('http://localhost:5001/news');
@@ -38,6 +40,8 @@ const NewsDigest: React.FC = () => {
                 setArticleData(data.articles);
             } catch (error) {
                 console.error('Error fetching articles:', error);
+            } finally {
+                setLoading(false)
             }
         };
 
@@ -47,6 +51,7 @@ const NewsDigest: React.FC = () => {
     }, []);
 
     useEffect(() => {
+        setLoading(true)
         const fetchHeadlines = async () => {
             try {
                 const response = await fetch('http://localhost:5001/news/headlines');
@@ -54,6 +59,8 @@ const NewsDigest: React.FC = () => {
                 setHeadlines(data.headlines);
             } catch (error) {
                 console.error('Error fetching headlines:', error);
+            } finally {
+                setLoading(false)
             }
         };
 
@@ -96,7 +103,7 @@ const NewsDigest: React.FC = () => {
                     <article key={`${category}-${index}`} className={styles.rightSidebarArticle}>
                         <div className={styles.articleHeader}>
                             <div className={styles.articleMeta}>
-                                <h4>{article.title}</h4>
+                                <h4 style={{direction: 'ltr'}}>{article.title}</h4>
                                 <span
                                     style={{
                                         display: 'flex',
@@ -133,103 +140,114 @@ const NewsDigest: React.FC = () => {
 
     return (
         <>
-        
+
             <div className={styles.newspaperContainer}>
                 {/* Header */}
                 <header>
                     <Header />
                 </header>
 
-                {/* Headlines line */}
-                <NewsFeed />
-
-                {/* Main Content Grid */}
-                <div className={styles.mainContent}>
-                    {/* Left Sidebar - Politics & Sports */}
-                    <aside className={styles.leftSidebar}>
-                        {renderSidebarSection('Politics', 'politics')}
-                        {renderSidebarSection('Sports', 'sports')}
-                    </aside>
-
-                    {/* Center Main Content - Headlines */}
-                    <main>
-                        <h1 className={styles.mainHeadline}>Headlines</h1>
-
-                        <div className={styles.centerContent}>
-                            {headlines.map((headline, idx) => {
-                                const { column1, column2 } = splitTextIntoColumns(headline.description);
-                                return (
-                                    <div key={idx} className={styles.headlineArticle}>
-                                        <img
-                                            src={headline.image}
-                                            className={styles.headlineImage}
-                                            alt={headline.title}
-                                            onError={(e) => {
-                                                const target = e.target as HTMLImageElement;
-                                                target.src = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=300&fit=crop';
-                                            }}
-                                        />
-                                        <p className="secondary-text">
-                                            From: <strong>{headline.source}</strong>
-                                        </p>
-                                        <h3 style={{
-                                            margin: '10px 0',
-                                            fontSize: isMobile ? '1rem' : '1.2rem',
-                                            lineHeight: '1.4'
-                                        }}>
-                                            {headline.title}
-                                        </h3>
-
-                                        <div className={styles.articleColumns}>
-                                            <div className={styles.column}>
-                                                <p>{column1}</p>
-                                            </div>
-                                            <div className={styles.column}>
-                                                <p>{column2}</p>
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            onClick={() => window.open(headline.url, '_blank')}
-                                            className="tooltip-link"
-                                            style={{
-                                                fontSize: isMobile ? 'x-small' : 'small',
-                                                cursor: 'pointer',
-                                                color: '#007acc',
-                                                textDecoration: 'underline'
-                                            }}
-                                        >
-                                            Read Full Article
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                {
+                    loading ? (
+                        <div style={{display:'flex', justifyContent:'center', margin: '10px 0', direction:'ltr'}}>
+                            <Throbber />
                         </div>
-                    </main>
+                    ) : (
+                        <>
+                            {/* Headlines line */}
+                            <NewsFeed />
 
-                    {/* Right Sidebar - Business & Entertainment */}
-                    <aside className={styles.rightSidebar}>
-                        {renderSidebarSection('Business', 'business')}
-                        {renderSidebarSection('Entertainment', 'entertainment')}
-                    </aside>
-                </div>
+                            {/* Main Content Grid */}
+                            <div className={styles.mainContent}>
+                                {/* Left Sidebar - Politics & Sports */}
+                                <aside className={styles.leftSidebar}>
+                                    {renderSidebarSection('Politics', 'politics')}
+                                    {renderSidebarSection('Sports', 'sports')}
+                                </aside>
 
-                {/* Footer */}
-                <footer className={styles.newspaperFooter}>
-                    <div className={styles.footerContent}>
-                        <span></span>
-                        <span>© 2025 Morwetsana Pule</span>
-                        <span style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                            flexWrap: 'wrap'
-                        }}>
-                            Daily Digest
-                            <Codesandbox size={isMobile ? 12 : 16} />
-                        </span>
-                    </div>
-                </footer>
+                                {/* Center Main Content - Headlines */}
+                                <main>
+                                    <h1 className={styles.mainHeadline}>Headlines</h1>
+
+                                    <div className={styles.centerContent}>
+                                        {headlines.map((headline, idx) => {
+                                            const { column1, column2 } = splitTextIntoColumns(headline.description);
+                                            return (
+                                                <div key={idx} className={styles.headlineArticle}>
+                                                    <img
+                                                        src={headline.image}
+                                                        className={styles.headlineImage}
+                                                        alt={headline.title}
+                                                        onError={(e) => {
+                                                            const target = e.target as HTMLImageElement;
+                                                            target.src = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=300&fit=crop';
+                                                        }}
+                                                    />
+                                                    <p className="secondary-text">
+                                                        From: <strong>{headline.source}</strong>
+                                                    </p>
+                                                    <h3 style={{
+                                                        margin: '10px 0',
+                                                        fontSize: isMobile ? '1rem' : '1.2rem',
+                                                        lineHeight: '1.4'
+                                                    }}>
+                                                        {headline.title}
+                                                    </h3>
+
+                                                    <div className={styles.articleColumns}>
+                                                        <div className={styles.column}>
+                                                            <p>{column1}</p>
+                                                        </div>
+                                                        <div className={styles.column}>
+                                                            <p>{column2}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        onClick={() => window.open(headline.url, '_blank')}
+                                                        className="tooltip-link"
+                                                        style={{
+                                                            fontSize: isMobile ? 'x-small' : 'small',
+                                                            cursor: 'pointer',
+                                                            color: '#007acc',
+                                                            textDecoration: 'underline'
+                                                        }}
+                                                    >
+                                                        Read Full Article
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </main>
+
+                                {/* Right Sidebar - Business & Entertainment */}
+                                <aside className={styles.rightSidebar}>
+                                    {renderSidebarSection('Business', 'business')}
+                                    {renderSidebarSection('Entertainment', 'entertainment')}
+                                </aside>
+                            </div>
+
+                            {/* Footer */}
+                            <footer className={styles.newspaperFooter}>
+                                <div className={styles.footerContent}>
+                                    <span></span>
+                                    <span>© 2025 Morwetsana Pule</span>
+                                    <span style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '10px',
+                                        flexWrap: 'wrap'
+                                    }}>
+                                        Daily Digest
+                                        <Codesandbox size={isMobile ? 12 : 16} />
+                                    </span>
+                                </div>
+                            </footer>
+                        </>
+                    )
+                }
+
             </div>
         </>
     );

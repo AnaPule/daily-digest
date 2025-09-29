@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 //components
 import CryptoTable from "./cryptoTable";
 import Header from "@/components/header";
+import Throbber from "@/components/loader/loader";
 import PageWidget from "@/components/page-widget";
 
 //models
@@ -13,7 +14,10 @@ import type Crypto from "@/models/crypto";
 const CryptoPage: React.FC = () => {
 
     const [cryptoData, setCryptoData] = useState<Crypto[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+
     useEffect(() => {
+        setLoading(true)
         const fetchData = async () => {
             await fetch('http://localhost:5001/crypto')
                 .then(
@@ -27,6 +31,10 @@ const CryptoPage: React.FC = () => {
                         setCryptoData(data.crypto)
                         //console.log('Testing', data.crypto.filter((data: Crypto) => data.name === 'Bitcoin'))
                     })
+                    .finally(
+                        () => {
+                            setLoading(false)
+                        })
                 .catch(error => console.error('Error fetching data:', error));
         }
         fetchData();
@@ -58,75 +66,35 @@ const CryptoPage: React.FC = () => {
                     subheading={'Stap updated on the latest cryptocurrency trends, including bitcoin dominance, altcoin season, ETF net flows, and real-time market centiment, all conveniently accessible in one place'}
                 />
             </header>
+            {
+                loading ? (
+                    <div style={{display:'flex', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                        <Throbber />
+                    </div>
+                ) : (
+                    <>
+                        {/* stats header */}
+                        <section className="stats-wrapper">
+                            {
+                                sortedData.map((c: Crypto) => (
+                                    <PageWidget
+                                        Heading={c.name}
+                                        Content={c.quote.ZAR.price}
+                                        Subcontent={c.quote.ZAR.percent_change_1h}
+                                        isPositive={c.quote.ZAR.volume_change_24h > 0 ? true : false}
+                                        datapoints={getDataPoints(c.name)}
+                                    />
+                                ))
+                            }
+                        </section >
 
-            {/* stats header */}
-            <section className="stats-wrapper">
-                {
-                    sortedData.map((c: Crypto) => (
-                        <PageWidget
-                            Heading={c.name}
-                            Content={c.quote.ZAR.price}
-                            Subcontent={c.quote.ZAR.percent_change_1h}
-                            isPositive={c.quote.ZAR.volume_change_24h > 0 ? true : false}
-                            datapoints={getDataPoints(c.name)}
+                        {/* table */}
+                        < CryptoTable
+                            data={cryptoData}
                         />
-                    ))
-                }
-
-                {/*
-                <PageWidget
-                    Heading={'Bitcoin'}
-                    Content={'$116 890.88'}
-                    Subcontent={'0.35%'}
-                    isPositive={false}
-                    datapoints={[100, 105, 95, 110, 120, 115, 125, 130, 120, 115, 110, 105]}
-                />
-                <PageWidget
-                    Heading="Ethereum"
-                    Content="$3,245.67"
-                    Subcontent="2.14%"
-                    isPositive={true}
-                    datapoints={[50, 52, 48, 55, 58, 62, 65, 70, 68, 72, 75, 78]}
-                />
-
-                <PageWidget
-                    Heading="AAPL"
-                    Content="$182.34"
-                    Subcontent="0.12%"
-                    isPositive={true}
-                    datapoints={[100, 102, 99, 101, 103, 100, 98, 101, 99, 100, 102, 101]}
-                />
-
-                <PageWidget
-                    Heading="AAPL"
-                    Content="$182.34"
-                    Subcontent="0.12%"
-                    isPositive={true}
-                    datapoints={[100, 102, 99, 101, 103, 100, 98, 101, 99, 100, 102, 101]}
-                />
-
-                <PageWidget
-                    Heading="AAPL"
-                    Content="$182.34"
-                    Subcontent="0.12%"
-                    isPositive={true}
-                    datapoints={[100, 102, 99, 101, 103, 100, 98, 101, 99, 100, 102, 101]}
-                />
-
-                <PageWidget
-                    Heading="AAPL"
-                    Content="$182.34"
-                    Subcontent="0.12%"
-                    isPositive={true}
-                    datapoints={[100, 102, 99, 101, 103, 100, 98, 101, 99, 100, 102, 101]}
-                />
-                */}
-            </section>
-
-            {/* table */}
-            <CryptoTable
-                data={cryptoData}
-            />
+                    </>
+                )
+            }
         </>
     );
 }
