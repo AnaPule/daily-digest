@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({
     subheading = 'Your daily real-time information hub'
 }) => {
 
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile] = useState(false);
     return (
         <div className={styles.Header}>
             <div className={styles.Center}>

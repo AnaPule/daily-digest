@@ -1,6 +1,6 @@
 
 //react
-import { useState, useEffect, Children } from "react";
+import { useState, useEffect } from "react";
 
 //components
 import NavBar from "../navigation/nav";
@@ -13,11 +13,11 @@ interface PageProps {
     children: any;
 }
 
-const PageTemplate: React.FC<PageProps> = ({children}) => {
+const PageTemplate: React.FC<PageProps> = () => {
 
     const [activeSection, setActiveSection] = useState<ActiveSection>('crypto');
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    const [isNavCollapsed, setIsNavCollapsed] = useState(false);
+    const [, setIsMobile] = useState(window.innerWidth <= 768);
+    const [, setIsNavCollapsed] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {

@@ -3,7 +3,7 @@ import styles from './crypto.module.css'
 import type Crypto from '../../models/crypto';
 import Tooltip from '../../components/tooltip';
 import React, { useState, useMemo } from 'react';
-import { Info, Star, ChevronLeft, ChevronRight, ChevronLast, ChevronFirst, ChevronDown, Funnel, ArrowDownNarrowWide } from 'lucide-react';
+import { Info, Star, ChevronLeft, ChevronRight, ChevronLast, ChevronFirst, Funnel, ArrowDownNarrowWide } from 'lucide-react';
 
 interface CryptoTableProps {
     data: Crypto[];
@@ -59,10 +59,12 @@ const CryptoTable: React.FC<CryptoTableProps> = ({ data }) => {
         })
     }, [sortedData, searchedValue])
 
+    /*
     const handleChange = (event: any) => {
         setItemsPerPage(event.target.value);
     };
-
+    */
+   
     // Calculate pagination
     const totalPages = Math.ceil(searchedData.length / itemsPerPage); // 10 000 / 10
     const startIndex = (currentPage - 1) * itemsPerPage; //for example, (1 - 1) * 10
