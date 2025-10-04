@@ -5,6 +5,7 @@ import { Codesandbox } from 'lucide-react';
 
 //components
 import Header from '@/components/header';
+import { APIService } from '@/services/api';
 import Throbber from '@/components/loader/loader';
 import NewsFeed from '@/components/news feed/news-feed';
 
@@ -35,8 +36,9 @@ const NewsDigest: React.FC = () => {
         setLoading(true)
         const fetchGeneral = async () => {
             try {
-                const response = await fetch('http://localhost:5001/news');
-                const data = await response.json();
+                const data = await APIService.request('/news')
+                // const response = await fetch('http://localhost:5001/news');
+                //const data = await response.json();
                 setArticleData(data.articles);
             } catch (error) {
                 console.error('Error fetching articles:', error);
