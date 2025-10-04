@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [
     react()
   ],
+  base: process.env.BASE_PATH || '/daily-digest',
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
