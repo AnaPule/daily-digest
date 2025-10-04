@@ -1,6 +1,18 @@
 {
   "version": 2,
   "buildCommand": "cd frontend/daily-digest && npm run build",
-  "outputDirectory": "frontend/daily-digest/dist",
-  "installCommand": "cd frontend/daily-digest && npm install"
+  "outputDirectory": "frontend/daily-digest/dist", 
+  "installCommand": "cd frontend/daily-digest && npm install",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
