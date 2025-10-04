@@ -13,12 +13,9 @@ from flask_cors import CORS  # For handling Cross-Origin Resource Sharing
 ## routes
     ##from backend.routes.article import article_bp
     ##from backend.routes.crypto import crypto_bp
-# from backend.routes import article_bp, crypto_bp, news_bp
+from routes import article_bp, crypto_bp, news_bp
 
 ## utils
-# from backend.utils import fetch_crypto_data, fetch_general_news, fetch_headlines
-
-from routes import article_bp, crypto_bp, news_bp
 from utils import fetch_crypto_data, fetch_general_news, fetch_headlines
 
 load_dotenv()

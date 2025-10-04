@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify
 from datetime import date, timedelta
 
 ## from backend.database.db import getdatabase # Absolute import
-from ..database.db import getdatabase
+from database.db import getdatabase
 
 article_bp = Blueprint('article', __name__)
 db = getdatabase()

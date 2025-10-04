@@ -1,7 +1,7 @@
 import pymongo
 from datetime import date, timedelta
 from flask import Blueprint, jsonify
-from backend.database.db import getdatabase
+from database.db import getdatabase
 
 crypto_bp = Blueprint('crypto', __name__)
 db = getdatabase()
