@@ -69,7 +69,7 @@ def home():
             'news': '/news'
         }
     })
-    return app
+    ## return app
 
 if __name__ == '__main__':
         ##app = create_app()
