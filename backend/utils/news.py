@@ -40,7 +40,7 @@ def fetch_headlines():
             
         # Connect to MongoDB and insert the articles
         from pymongo import MongoClient
-        client = MongoClient(os.getenv('DATABASE_URL'))
+        client = MongoClient(os.getenv('MONGODB_URI'))
         db = client[os.getenv('DATABASE')]
 
         if news_articles:

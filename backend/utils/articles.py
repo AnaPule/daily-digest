@@ -48,7 +48,7 @@ def fetch_general_news():
         print("error fetching latest articles: ", AttributeError)
     #print(f"{response}")
     
-    client = MongoClient(os.getenv('DATABASE_URL'))
+    client = MongoClient(os.getenv('MONGODB_URI'))
     db = client[os.getenv('DATABASE')]
     #db.create_collection('headlines')
     ## format: database.collection.function
