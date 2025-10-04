@@ -27,7 +27,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def get_database():
+def getdatabase():
     # Get MongoDB URI from environment variables
     MONGODB_URI = os.getenv('MONGODB_URI')
     
@@ -57,4 +57,4 @@ def get_database():
     except Exception as e:
         print(f"Error connecting to MongoDB: {e}")
         raise
-get_database()
+getdatabase()
