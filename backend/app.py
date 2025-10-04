@@ -1,5 +1,8 @@
 """implement socket method later..."""
+import sys
 import os
+# Add the current directory to Python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import atexit
 from flask import Flask, jsonify
 from dotenv import load_dotenv  ## environment variables
@@ -10,10 +13,13 @@ from flask_cors import CORS  # For handling Cross-Origin Resource Sharing
 ## routes
     ##from backend.routes.article import article_bp
     ##from backend.routes.crypto import crypto_bp
-from backend.routes import article_bp, crypto_bp, news_bp
+# from backend.routes import article_bp, crypto_bp, news_bp
 
 ## utils
-from backend.utils import fetch_crypto_data, fetch_general_news, fetch_headlines
+# from backend.utils import fetch_crypto_data, fetch_general_news, fetch_headlines
+
+from routes import article_bp, crypto_bp, news_bp
+from utils import fetch_crypto_data, fetch_general_news, fetch_headlines
 
 load_dotenv()
 
