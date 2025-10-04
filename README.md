@@ -50,6 +50,7 @@ cp .env.example .env
   - Estimated Duration: 2-3 days
   - Focus: Python syntax, MongoDB basics, expansion for react experience
 
-## Deployment
+# Deployment
 - Frontend: Vercel
-- Backend
+- Backend: render
+- database: mongoDB Atlas with AWS as the host
