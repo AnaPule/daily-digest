@@ -49,3 +49,7 @@ cp .env.example .env
 ## Time Allocation
   - Estimated Duration: 2-3 days
   - Focus: Python syntax, MongoDB basics, expansion for react experience
+
+## Deployment
+- Frontend: Vercel
+- Backend
